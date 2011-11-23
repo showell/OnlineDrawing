@@ -36,19 +36,22 @@ run_code = (code) ->
     
 code = '''
   ns = 'http://www.w3.org/2000/svg'
-  svg = document.createElementNS ns, 'svg'
-  svg.width = 200
-  svg.height = 200
-  svg.style.height = '200px'
-  svg.style.width = '200px'
-  svg.style.border = "1px black solid"
-
-  elem = document.getElementById("main")  
-  elem.appendChild svg
+  canvas = ->
+    svg = document.createElementNS ns, 'svg'
+    svg.width = 500
+    svg.height = 500
+    svg.style.height = '500px'
+    svg.style.width = '500px'
+    svg.style.border = "1px black solid"
+    elem = document.getElementById("main")  
+    elem.appendChild svg
+    svg
+    
+  svg = canvas()
   
   parent = svg
-  rx = 10
-  ry = 10
+  rx = 15
+  ry = 15
   cx = 10
   
   dot = document.createElementNS ns, 'ellipse'
@@ -63,7 +66,7 @@ code = '''
   
   move = ->
     cx += delta
-    if cx < 0 or 200 < cx
+    if cx < 0 or 500 < cx
       delta *= -1
       if fill == 'red'
         fill = 'green'
@@ -72,7 +75,7 @@ code = '''
     
     dot.setAttribute 'cx', cx
     dot.setAttribute 'fill', fill
-    setTimeout(move, 100)
+    setTimeout(move, 50)
 
   move()
   '''
