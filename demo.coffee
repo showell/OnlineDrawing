@@ -36,33 +36,41 @@ run_code = (code) ->
     
 code = '''
   ns = 'http://www.w3.org/2000/svg'
-  canvas = ->
-    svg = document.createElementNS ns, 'svg'
-    svg.width = 500
-    svg.height = 500
-    svg.style.height = '500px'
-    svg.style.width = '500px'
-    svg.style.border = "1px black solid"
-    elem = document.getElementById("main")  
-    elem.appendChild svg
-    svg
+  environment = ->
+    canvas = ->
+      svg = document.createElementNS ns, 'svg'
+      svg.width = 500
+      svg.height = 500
+      svg.style.height = '500px'
+      svg.style.width = '500px'
+      svg.style.border = "1px black solid"
+      elem = document.getElementById("main")  
+      elem.appendChild svg
+      svg
     
-  svg = canvas()
+    svg = canvas()
   
-  parent = svg
-  rx = 15
-  ry = 15
-  cx = 10
+    ellipse = (cx=250, cy=250, rx=15, ry=15) ->
+      dot = document.createElementNS ns, 'ellipse'
+      dot.setAttribute 'rx', rx
+      dot.setAttribute 'ry', ry
+      dot.setAttribute 'cx', cx
+      dot.setAttribute 'cy', cy
+      svg.appendChild dot
+      dot
+
+    svg: svg
+    ellipse: ellipse
+    
+  env = environment()
+  svg = env.svg
+  ellipse = env.ellipse
   
-  dot = document.createElementNS ns, 'ellipse'
-  dot.setAttribute 'rx', rx
-  dot.setAttribute 'ry', ry
-  dot.setAttribute 'cx', cx
-  dot.setAttribute 'cy', 50
-  parent.appendChild dot
+  circle = ellipse()
   
   delta = 5
   fill = "red"
+  cx = 150
   
   move = ->
     cx += delta
@@ -73,8 +81,8 @@ code = '''
       else
         fill = 'red'
     
-    dot.setAttribute 'cx', cx
-    dot.setAttribute 'fill', fill
+    circle.setAttribute 'cx', cx
+    circle.setAttribute 'fill', fill
     setTimeout(move, 50)
 
   move()
