@@ -24,7 +24,7 @@ set_code = (code) ->
   
 run_code = (code) ->
   try
-    js = CoffeeScript.compile code
+    js = CoffeeScript.compile prelude + code
   catch e
     console.log e
     console.log "(problem with compiling CS)"
@@ -34,7 +34,7 @@ run_code = (code) ->
     console.log e
     console.log "problem in JS"
     
-code = '''
+prelude = '''
   width = 500
   environment = ->
     ns = 'http://www.w3.org/2000/svg'
@@ -67,9 +67,10 @@ code = '''
     
   env = environment()
   {svg, ellipse, after} = env
+  ''' + '\n'
   
+code = '''
   circle = ellipse()
-  
   delta = 5
   fill = "red"
   cx = width / 2
