@@ -60,11 +60,20 @@ prelude = '''
       dot.setAttribute "fill", "blue"
       svg.appendChild dot
       delta = 2
-      move: ->
-        cx += delta
-        if cx < 0 or width < cx
-          delta *= -1
-        dot.setAttribute 'cx', cx
+      self =
+        cx: (n) ->
+          dot.setAttribute "cx", n
+        move: ->
+          cx += delta
+          n = Math.floor cx / width
+          if n % 2 == 0
+            self.cx cx % width
+          else
+            self.cx width - (cx % width)
+        slower: ->
+          delta -= 6   
+        faster: ->
+          delta += 6
 
     svg: svg
     ellipse: ellipse
@@ -77,9 +86,22 @@ prelude = '''
   ''' + '\n'
   
 code = '''  
+  i = 0
+  faster = true
   pulse = ->
+    i += 1
     ball.move()
-    after 50, pulse
+    if i == 5
+      i = 0
+      if faster
+        faster = false
+      else
+        faster = true
+    if faster
+      ball.faster()
+    else
+      ball.slower()
+    after 200, pulse
 
   pulse()
   '''
