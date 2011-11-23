@@ -57,8 +57,14 @@ prelude = '''
       dot.setAttribute 'ry', ry
       dot.setAttribute 'cx', cx
       dot.setAttribute 'cy', cy
+      dot.setAttribute "fill", "blue"
       svg.appendChild dot
-      dot
+      delta = 2
+      move: ->
+        cx += delta
+        if cx < 0 or width < cx
+          delta *= -1
+        dot.setAttribute 'cx', cx
 
     svg: svg
     ellipse: ellipse
@@ -67,28 +73,15 @@ prelude = '''
     
   env = environment()
   {svg, ellipse, after} = env
+  ball = ellipse()
   ''' + '\n'
   
-code = '''
-  circle = ellipse()
-  delta = 5
-  fill = "red"
-  cx = width / 2
-  
-  move = ->
-    cx += delta
-    if cx < 0 or width < cx
-      delta *= -1
-      if fill == 'red'
-        fill = 'green'
-      else
-        fill = 'red'
-    
-    circle.setAttribute 'cx', cx
-    circle.setAttribute 'fill', fill
-    after 50, move
+code = '''  
+  pulse = ->
+    ball.move()
+    after 50, pulse
 
-  move()
+  pulse()
   '''
         
 $(document).ready ->
