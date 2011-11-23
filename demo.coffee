@@ -35,14 +35,15 @@ run_code = (code) ->
     console.log "problem in JS"
     
 code = '''
-  ns = 'http://www.w3.org/2000/svg'
+  width = 500
   environment = ->
+    ns = 'http://www.w3.org/2000/svg'
     canvas = ->
       svg = document.createElementNS ns, 'svg'
-      svg.width = 500
-      svg.height = 500
-      svg.style.height = '500px'
-      svg.style.width = '500px'
+      svg.width = width
+      svg.height = width
+      svg.style.height = width + 'px'
+      svg.style.width = width + 'px'
       svg.style.border = "1px black solid"
       elem = document.getElementById("main")  
       elem.appendChild svg
@@ -50,7 +51,7 @@ code = '''
     
     svg = canvas()
   
-    ellipse = (cx=250, cy=250, rx=15, ry=15) ->
+    ellipse = (cx=width/2, cy=width/2, rx=15, ry=15) ->
       dot = document.createElementNS ns, 'ellipse'
       dot.setAttribute 'rx', rx
       dot.setAttribute 'ry', ry
@@ -61,20 +62,21 @@ code = '''
 
     svg: svg
     ellipse: ellipse
+    after: (t, f) -> setTimeout f, t
+    width: width
     
   env = environment()
-  svg = env.svg
-  ellipse = env.ellipse
+  {svg, ellipse, after} = env
   
   circle = ellipse()
   
   delta = 5
   fill = "red"
-  cx = 150
+  cx = width / 2
   
   move = ->
     cx += delta
-    if cx < 0 or 500 < cx
+    if cx < 0 or width < cx
       delta *= -1
       if fill == 'red'
         fill = 'green'
@@ -83,7 +85,7 @@ code = '''
     
     circle.setAttribute 'cx', cx
     circle.setAttribute 'fill', fill
-    setTimeout(move, 50)
+    after 50, move
 
   move()
   '''
