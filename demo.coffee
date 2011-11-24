@@ -4,6 +4,8 @@ demo_layout = \
     tr valign="top"
       td id="leftPanel"       
         h2 id="leftPanel" | Input
+        input type="submit" value="Run" id="runCode" |
+        <br>
         textarea id="input_code" rows=30 cols=80 |
       td id="rightPanel"
         h4 | Output
@@ -46,7 +48,7 @@ prelude = '''
       svg.style.width = width + 'px'
       svg.style.border = "1px black solid"
       elem = document.getElementById("main")  
-      elem.appendChild svg
+      $(elem).html svg
       svg
     
     svg = canvas()
@@ -96,6 +98,7 @@ prelude = '''
   ''' + '\n'
   
 code = '''
+  # Challenge: Get the ball to turn a tighter circle.
   repeat ->
     ball.move()
     ball.turn(3)
@@ -105,6 +108,10 @@ $(document).ready ->
   $("#content").html(convert demo_layout)
   $("#leftPanel").css("padding", "10px")
   $("#rightPanel").css("padding", "10px")
+  $("#runCode").click ->
+    code = $("#input_code").val()
+    set_code code
+    run_code code
   
   $("#input_code").tabby {tabString: "  "};
   set_code code
