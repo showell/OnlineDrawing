@@ -19,9 +19,21 @@ window.helpers = ->
     
   sine = (angle) ->
     Math.sin (angle * Math.PI / 180)
+    
+  make_shape = (shape) ->
+    document.createElementNS ns, shape
+
+  line = (p1, p2) ->
+    elem = make_shape "line"
+    elem.setAttribute "x1", p1[0]
+    elem.setAttribute "y1", p1[1]
+    elem.setAttribute "x2", p2[0]
+    elem.setAttribute "y2", p2[1]
+    $(elem).attr "style", "stroke:black"
+    svg.appendChild elem
 
   ellipse = (cx=width/2, cy=width/2, rx=15, ry=15, fill="blue") ->
-    dot = document.createElementNS ns, 'ellipse'
+    dot = make_shape 'ellipse'
     dot.setAttribute 'rx', rx
     dot.setAttribute 'ry', ry
     dot.setAttribute 'cx', cx
@@ -47,15 +59,34 @@ window.helpers = ->
         s = sine(angle)
         [dx, dy] = [dx * c + dy * s, dy * c - dx * s]
 
+  yy = (y) -> width - y
+  
   launch = (ball, angle) ->
+    wall_offset = 315
+    wall_height = 421
+    line [wall_offset, yy(0)], [wall_offset, yy(wall_height)] 
     cx = 0
     cy = 0
     ball.goto(0, 0)
     v = 7
     dx = v * cosine(angle)
     dy = v * sine(angle)
+    ball_radius = 15
+    over_wall = false
+    flying = true
     repeat ->
-      if cy >= 0 and cy <= width
+      return if !flying
+      
+      flying = false if cy < 0 or cx > width
+      
+      if flying and !over_wall and cx + ball_radius >= wall_offset
+        if cy > wall_height + ball_radius
+          if cx - ball_radius >= wall_offset
+            over_wall = true
+        else
+          flying = false
+          
+      if flying
         cx += dx
         cy += dy
         ball.goto(cx, width - cy)
@@ -65,7 +96,7 @@ window.helpers = ->
 
   repeat = (f) ->
     f()
-    after 100, -> repeat(f)
+    after 30, -> repeat(f)
 
   svg: svg
   ellipse: ellipse

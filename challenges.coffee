@@ -6,8 +6,9 @@ window.CHALLENGES = [
       ''' + '\n'
   
     code: '''
+      # Challenge: Change the angle so that you launch the ball over the wall.
       ball = circle()
-      angle = 75
+      angle = 35
       launch ball, angle
       '''
   },
@@ -23,7 +24,8 @@ window.CHALLENGES = [
       ball = circle()
       repeat ->
         ball.move()
-        ball.turn(3)
+        angle = 3 # degrees
+        ball.turn angle
       '''
   }
 ]
