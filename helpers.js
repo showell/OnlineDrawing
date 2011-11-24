@@ -89,7 +89,7 @@
     launch = function(ball, angle) {
       var ball_radius, cx, cy, dx, dy, flying, over_wall, v, wall_height, wall_offset;
       wall_offset = 315;
-      wall_height = 421;
+      wall_height = 427;
       line([wall_offset, 0], [wall_offset, wall_height]);
       cx = 0;
       cy = 0;
@@ -109,7 +109,7 @@
         }
         if (flying && !over_wall && cx + ball_radius >= wall_offset) {
           if (cy > wall_height + ball_radius) {
-            if (cx - ball_radius >= wall_offset) {
+            if (cx >= wall_offset) {
               over_wall = true;
             }
           } else {

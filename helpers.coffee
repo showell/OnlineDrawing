@@ -61,7 +61,7 @@ window.helpers = ->
 
   launch = (ball, angle) ->
     wall_offset = 315
-    wall_height = 421
+    wall_height = 427
     line [wall_offset, 0], [wall_offset, wall_height] 
     cx = 0
     cy = 0
@@ -79,7 +79,7 @@ window.helpers = ->
       
       if flying and !over_wall and cx + ball_radius >= wall_offset
         if cy > wall_height + ball_radius
-          if cx - ball_radius >= wall_offset
+          if cx >= wall_offset
             over_wall = true
         else
           flying = false

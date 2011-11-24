@@ -8,7 +8,8 @@ window.CHALLENGES = [
       ''' + '\n'
   
     code: '''
-      # Challenge: Change the angle so that you launch the ball over the wall.
+      # Challenge: Change the angle so that you launch the ball clear over the wall.
+      # Just use trial and error to find the correct steepness.
       ball = circle()
       angle = 35
       launch ball, angle
