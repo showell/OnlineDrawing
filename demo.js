@@ -1,7 +1,7 @@
 (function() {
   var CHALLENGE, convert, demo_layout, load_programs, run_code, set_code, start_challenge;
   CHALLENGE = null;
-  demo_layout = 'table\n  tr valign="top"\n    td id="leftPanel"\n      ul id="program_list" | \n      h2 id="leftPanel" | Input\n      input type="submit" value="Run" id="runCode" |\n      <br>\n      textarea id="input_code" rows=30 cols=80 |\n    td id="rightPanel"\n      h4 | Output\n      div id="main" | ';
+  demo_layout = 'table\n  tr valign="top"\n    td id ="sideBar"\n      ul id="program_list" | \n    td id="leftPanel"\n      h2 id="leftPanel" | Input\n      input type="submit" value="Run" id="runCode" |\n      <br>\n      textarea id="input_code" rows=30 cols=80 |\n    td id="rightPanel"\n      h4 | Output\n      div id="main" | ';
   convert = this.pipedent_convert;
   set_code = function(code) {
     var len, line, max_line, _i, _len, _ref;

@@ -1,5 +1,50 @@
 window.CHALLENGES = [
   {
+    title: "Draw the Cube"
+    
+    prelude: '''
+      env = window.helpers()
+      {line} = env
+      ''' + '\n'
+  
+    code: '''
+      # Challenge: Make the cube bigger.
+      shift = (point, dx, dy) ->
+        [x, y] = point
+        [x + dx, y + dy]
+      
+      len = 160
+      len2 = len * 0.9
+      dx = len * 0.3
+      dy = len * 0.6
+      
+      A = [150, 150]
+      E = shift A, dx, dy # back corner
+      
+      B = shift A, len, 0
+      C = shift B, 0, len
+      D = shift C, -1 * len, 0
+      line A, B
+      line B, C
+      line C, D
+      line D, A
+      
+      grey = "#DDDDDD"
+      
+      F = shift E, len2, 0
+      G = shift F, 0, len2
+      H = shift G, -1 * len2, 0
+      line E, F, grey
+      line F, G
+      line G, H
+      line H, E, grey
+      
+      line A, E, grey
+      line B, F
+      line C, G
+      line D, H
+      '''
+  },  {
     title: "Launch the Ball"
     
     prelude: '''

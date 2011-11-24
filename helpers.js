@@ -26,14 +26,17 @@
     yy = function(y) {
       return width - y;
     };
-    line = function(p1, p2) {
+    line = function(p1, p2, color) {
       var elem;
+      if (color == null) {
+        color = "black";
+      }
       elem = make_shape("line");
       elem.setAttribute("x1", p1[0]);
       elem.setAttribute("y1", yy(p1[1]));
       elem.setAttribute("x2", p2[0]);
       elem.setAttribute("y2", yy(p2[1]));
-      $(elem).attr("style", "stroke:black");
+      $(elem).attr("style", "stroke:" + color);
       return svg.appendChild(elem);
     };
     ellipse = function(cx, cy, rx, ry, fill) {
@@ -90,14 +93,15 @@
       var ball_radius, cx, cy, dx, dy, flying, over_wall, v, wall_height, wall_offset;
       wall_offset = 315;
       wall_height = 427;
+      ball_radius = 15;
       line([wall_offset, 0], [wall_offset, wall_height]);
+      line([wall_offset - ball_radius, wall_height], [wall_offset, wall_height]);
       cx = 0;
       cy = 0;
       ball.goto(0, 0);
       v = 7;
       dx = v * cosine(angle);
       dy = v * sine(angle);
-      ball_radius = 15;
       over_wall = false;
       flying = true;
       return repeat(function() {
@@ -139,7 +143,8 @@
       circle: ellipse,
       width: width,
       repeat: repeat,
-      launch: launch
+      launch: launch,
+      line: line
     };
   };
 }).call(this);

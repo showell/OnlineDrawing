@@ -23,13 +23,13 @@ window.helpers = ->
 
   yy = (y) -> width - y
   
-  line = (p1, p2) ->
+  line = (p1, p2, color="black") ->
     elem = make_shape "line"
     elem.setAttribute "x1", p1[0]
     elem.setAttribute "y1", yy p1[1]
     elem.setAttribute "x2", p2[0]
     elem.setAttribute "y2", yy p2[1]
-    $(elem).attr "style", "stroke:black"
+    $(elem).attr "style", "stroke:#{color}"
     svg.appendChild elem
 
   ellipse = (cx=width/2, cy=width/2, rx=15, ry=15, fill="blue") ->
@@ -62,14 +62,16 @@ window.helpers = ->
   launch = (ball, angle) ->
     wall_offset = 315
     wall_height = 427
-    line [wall_offset, 0], [wall_offset, wall_height] 
+    ball_radius = 15
+    line [wall_offset, 0], [wall_offset, wall_height]
+    line [wall_offset - ball_radius, wall_height], [wall_offset, wall_height]
+    
     cx = 0
     cy = 0
     ball.goto(0, 0)
     v = 7
     dx = v * cosine(angle)
     dy = v * sine(angle)
-    ball_radius = 15
     over_wall = false
     flying = true
     repeat ->
@@ -102,6 +104,7 @@ window.helpers = ->
   width: width
   repeat: repeat
   launch: launch
+  line: line
   
   
   

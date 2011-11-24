@@ -10,8 +10,9 @@ demo_layout = \
   '''
   table
     tr valign="top"
-      td id="leftPanel"
+      td id ="sideBar"
         ul id="program_list" | 
+      td id="leftPanel"
         h2 id="leftPanel" | Input
         input type="submit" value="Run" id="runCode" |
         <br>
