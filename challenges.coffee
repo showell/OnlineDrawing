@@ -2,6 +2,18 @@ window.CHALLENGES = [
   {    
     prelude: '''
       env = window.helpers()
+      {circle, launch} = env
+      ''' + '\n'
+  
+    code: '''
+      ball = circle()
+      angle = 75
+      launch ball, angle
+      '''
+  },
+  {    
+    prelude: '''
+      env = window.helpers()
       {circle, repeat} = env
       ''' + '\n'
   

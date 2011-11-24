@@ -33,7 +33,10 @@ window.helpers = ->
     self =
       attr: (field, value) ->
         dot.setAttribute field, value
-      move: ->
+      move: () ->
+        self.move2 dx, dy
+        
+      move2: (dx, dy) ->
         cx += dx
         cy += dy
         n = Math.floor cx / width
@@ -44,6 +47,13 @@ window.helpers = ->
         c = cosine(angle)
         s = sine(angle)
         [dx, dy] = [dx * c + dy * s, dy * c - dx * s]
+
+  launch = (ball, angle) ->
+    dx = 3 * cosine(angle)
+    dy = 3 * sine(angle)
+    repeat ->
+      ball.move2(dx, -1 * dy)
+      dy -= 0.05
 
   after = (t, f) -> setTimeout f, t
 
@@ -56,3 +66,8 @@ window.helpers = ->
   circle: ellipse
   width: width
   repeat: repeat
+  launch: launch
+  
+  
+  
+  

@@ -1,6 +1,6 @@
 (function() {
   window.helpers = function() {
-    var after, canvas, cosine, ellipse, ns, repeat, sine, svg, width;
+    var after, canvas, cosine, ellipse, launch, ns, repeat, sine, svg, width;
     width = 500;
     ns = 'http://www.w3.org/2000/svg';
     canvas = function() {
@@ -53,6 +53,9 @@
           return dot.setAttribute(field, value);
         },
         move: function() {
+          return self.move2(dx, dy);
+        },
+        move2: function(dx, dy) {
           var n;
           cx += dx;
           cy += dy;
@@ -69,6 +72,15 @@
         }
       };
     };
+    launch = function(ball, angle) {
+      var dx, dy;
+      dx = 3 * cosine(angle);
+      dy = 3 * sine(angle);
+      return repeat(function() {
+        ball.move2(dx, -1 * dy);
+        return dy -= 0.05;
+      });
+    };
     after = function(t, f) {
       return setTimeout(f, t);
     };
@@ -83,7 +95,8 @@
       ellipse: ellipse,
       circle: ellipse,
       width: width,
-      repeat: repeat
+      repeat: repeat,
+      launch: launch
     };
   };
 }).call(this);
