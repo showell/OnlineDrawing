@@ -34,11 +34,10 @@ window.helpers = ->
       attr: (field, value) ->
         dot.setAttribute field, value
       move: () ->
-        self.move2 dx, dy
-        
-      move2: (dx, dy) ->
         cx += dx
         cy += dy
+        self.goto(cx, cy)
+      goto: (cx, cy) ->
         n = Math.floor cx / width
         self.attr "cx", cx
         self.attr "cy", cy
@@ -49,11 +48,18 @@ window.helpers = ->
         [dx, dy] = [dx * c + dy * s, dy * c - dx * s]
 
   launch = (ball, angle) ->
-    dx = 3 * cosine(angle)
-    dy = 3 * sine(angle)
+    cx = 0
+    cy = 0
+    ball.goto(0, 0)
+    v = 7
+    dx = v * cosine(angle)
+    dy = v * sine(angle)
     repeat ->
-      ball.move2(dx, -1 * dy)
-      dy -= 0.05
+      if cy >= 0 and cy <= width
+        cx += dx
+        cy += dy
+        ball.goto(cx, width - cy)
+        dy -= 0.05
 
   after = (t, f) -> setTimeout f, t
 

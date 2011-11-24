@@ -53,12 +53,12 @@
           return dot.setAttribute(field, value);
         },
         move: function() {
-          return self.move2(dx, dy);
-        },
-        move2: function(dx, dy) {
-          var n;
           cx += dx;
           cy += dy;
+          return self.goto(cx, cy);
+        },
+        goto: function(cx, cy) {
+          var n;
           n = Math.floor(cx / width);
           self.attr("cx", cx);
           self.attr("cy", cy);
@@ -73,12 +73,20 @@
       };
     };
     launch = function(ball, angle) {
-      var dx, dy;
-      dx = 3 * cosine(angle);
-      dy = 3 * sine(angle);
+      var cx, cy, dx, dy, v;
+      cx = 0;
+      cy = 0;
+      ball.goto(0, 0);
+      v = 7;
+      dx = v * cosine(angle);
+      dy = v * sine(angle);
       return repeat(function() {
-        ball.move2(dx, -1 * dy);
-        return dy -= 0.05;
+        if (cy >= 0 && cy <= width) {
+          cx += dx;
+          cy += dy;
+          ball.goto(cx, width - cy);
+          return dy -= 0.05;
+        }
       });
     };
     after = function(t, f) {
