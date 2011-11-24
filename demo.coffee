@@ -50,6 +50,12 @@ prelude = '''
       svg
     
     svg = canvas()
+    
+    cosine = (angle) ->
+      Math.cos (angle * Math.PI / 180)
+      
+    sine = (angle) ->
+      Math.sin (angle * Math.PI / 180)
   
     ellipse = (cx=width/2, cy=width/2, rx=15, ry=15) ->
       dot = document.createElementNS ns, 'ellipse'
@@ -59,17 +65,21 @@ prelude = '''
       dot.setAttribute 'cy', cy
       dot.setAttribute "fill", "blue"
       svg.appendChild dot
-      delta = 5
+      dx = 5
+      dy = 0
       self =
-        cx: (n) ->
-          dot.setAttribute "cx", n
+        attr: (field, value) ->
+          dot.setAttribute field, value
         move: ->
-          cx += delta
+          cx += dx
+          cy += dy
           n = Math.floor cx / width
-          if n % 2 == 0
-            self.cx cx % width
-          else
-            self.cx width - (cx % width)
+          self.attr "cx", cx
+          self.attr "cy", cy
+        turn: (angle) ->
+          c = cosine(angle)
+          s = sine(angle)
+          [dx, dy] = [dx * c + dy * s, dy * c - dx * s]
 
     svg: svg
     ellipse: ellipse
@@ -85,8 +95,9 @@ prelude = '''
   ''' + '\n'
   
 code = '''
-  repeat (i) ->
+  repeat ->
     ball.move()
+    ball.turn(3)
   '''
         
 $(document).ready ->
