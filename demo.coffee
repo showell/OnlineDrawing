@@ -59,7 +59,7 @@ prelude = '''
       dot.setAttribute 'cy', cy
       dot.setAttribute "fill", "blue"
       svg.appendChild dot
-      delta = 2
+      delta = 5
       self =
         cx: (n) ->
           dot.setAttribute "cx", n
@@ -70,10 +70,6 @@ prelude = '''
             self.cx cx % width
           else
             self.cx width - (cx % width)
-        slower: ->
-          delta -= 6   
-        faster: ->
-          delta += 6
 
     svg: svg
     ellipse: ellipse
@@ -83,27 +79,14 @@ prelude = '''
   env = environment()
   {svg, ellipse, after} = env
   ball = ellipse()
+  repeat = (f) ->
+    f()
+    after 100, -> repeat(f)
   ''' + '\n'
   
-code = '''  
-  i = 0
-  faster = true
-  pulse = ->
-    i += 1
+code = '''
+  repeat (i) ->
     ball.move()
-    if i == 5
-      i = 0
-      if faster
-        faster = false
-      else
-        faster = true
-    if faster
-      ball.faster()
-    else
-      ball.slower()
-    after 200, pulse
-
-  pulse()
   '''
         
 $(document).ready ->
