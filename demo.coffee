@@ -1,3 +1,9 @@
+# TODO:
+# error handling
+# pause/resume
+# expiring timers
+# extracting challenges
+
 demo_layout = \
   '''
   table
@@ -98,7 +104,8 @@ prelude = '''
   ''' + '\n'
   
 code = '''
-  # Challenge: Get the ball to turn a tighter circle.
+  # Challenge #1: Get the ball to turn a tighter circle.
+  # Challenge #2: Get it to turn right.
   repeat ->
     ball.move()
     ball.turn(3)
