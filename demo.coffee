@@ -4,6 +4,8 @@
 # expiring timers
 # extracting challenges
 
+CHALLENGE = null
+
 demo_layout = \
   '''
   table
@@ -32,7 +34,7 @@ set_code = (code) ->
   
 run_code = (code) ->
   try
-    js = CoffeeScript.compile prelude + code
+    js = CoffeeScript.compile CHALLENGE.prelude + code
   catch e
     console.log e
     console.log "(problem with compiling CS)"
@@ -41,21 +43,12 @@ run_code = (code) ->
   catch e
     console.log e
     console.log "problem in JS"
-    
-prelude = '''
-  env = window.helpers()
-  {circle, repeat} = env
-  ''' + '\n'
-  
-code = '''
-  # Challenge #1: Get the ball to turn a tighter circle.
-  # Challenge #2: Get it to turn right.
-  ball = circle()
-  repeat ->
-    ball.move()
-    ball.turn(3)
-  '''
-        
+
+start_challenge = ->
+  code = CHALLENGE.code
+  set_code code
+  run_code code
+          
 $(document).ready ->
   $("#content").html(convert demo_layout)
   $("#leftPanel").css("padding", "10px")
@@ -66,5 +59,5 @@ $(document).ready ->
     run_code code
   
   $("#input_code").tabby {tabString: "  "};
-  set_code code
-  run_code code
+  CHALLENGE = window.CHALLENGES[0]
+  start_challenge()
