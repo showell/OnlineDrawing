@@ -1,3 +1,7 @@
 #input_code {
   font-size: 13px;
-};
+}
+
+#program_list {
+  list-style: none;
+}

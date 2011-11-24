@@ -6,8 +6,6 @@
     canvas = function() {
       var elem, svg;
       svg = document.createElementNS(ns, 'svg');
-      svg.width = width;
-      svg.height = width;
       svg.style.height = width + 'px';
       svg.style.width = width + 'px';
       svg.style.border = "1px black solid";

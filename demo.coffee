@@ -10,7 +10,8 @@ demo_layout = \
   '''
   table
     tr valign="top"
-      td id="leftPanel"       
+      td id="leftPanel"
+        ul id="program_list" | 
         h2 id="leftPanel" | Input
         input type="submit" value="Run" id="runCode" |
         <br>
@@ -32,19 +33,34 @@ set_code = (code) ->
   $("#input_code").attr("cols", max_line * 0.9)
   $("#input_code").val code
   
+load_programs = ->
+  elem = $("#program_list")
+  set_click = (a, challenge) ->
+    a.click ->
+      start_challenge challenge
+
+  for challenge in window.CHALLENGES
+    li = $("<li>")
+    a = $ convert "a href='#' | #{challenge.title}"
+    li.html a
+    set_click a, challenge
+    elem.append(li)  
+  
 run_code = (code) ->
   try
     js = CoffeeScript.compile CHALLENGE.prelude + code
   catch e
     console.log e
     console.log "(problem with compiling CS)"
-  try
-    eval js
-  catch e
-    console.log e
-    console.log "problem in JS"
+  eval js
+  # try
+  #   eval js
+  # catch e
+  #   console.log e
+  #   console.log "problem in JS"
 
-start_challenge = ->
+start_challenge = (challenge) ->
+  CHALLENGE = challenge
   code = CHALLENGE.code
   set_code code
   run_code code
@@ -59,5 +75,5 @@ $(document).ready ->
     run_code code
   
   $("#input_code").tabby {tabString: "  "};
-  CHALLENGE = window.CHALLENGES[0]
-  start_challenge()
+  start_challenge window.CHALLENGES[0]
+  load_programs()

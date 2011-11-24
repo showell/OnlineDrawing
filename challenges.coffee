@@ -1,5 +1,7 @@
 window.CHALLENGES = [
-  {    
+  {
+    title: "Launch the Ball"
+    
     prelude: '''
       env = window.helpers()
       {circle, launch} = env
@@ -12,7 +14,9 @@ window.CHALLENGES = [
       launch ball, angle
       '''
   },
-  {    
+  { 
+    title: "Tighten the Circle"
+    
     prelude: '''
       env = window.helpers()
       {circle, repeat} = env
