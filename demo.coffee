@@ -57,13 +57,13 @@ prelude = '''
     sine = (angle) ->
       Math.sin (angle * Math.PI / 180)
   
-    ellipse = (cx=width/2, cy=width/2, rx=15, ry=15) ->
+    ellipse = (cx=width/2, cy=width/2, rx=15, ry=15, fill="blue") ->
       dot = document.createElementNS ns, 'ellipse'
       dot.setAttribute 'rx', rx
       dot.setAttribute 'ry', ry
       dot.setAttribute 'cx', cx
       dot.setAttribute 'cy', cy
-      dot.setAttribute "fill", "blue"
+      dot.setAttribute "fill", fill
       svg.appendChild dot
       dx = 5
       dy = 0
@@ -76,6 +76,7 @@ prelude = '''
           n = Math.floor cx / width
           self.attr "cx", cx
           self.attr "cy", cy
+          ellipse(cx, cy, 1, 1, "red")
         turn: (angle) ->
           c = cosine(angle)
           s = sine(angle)
