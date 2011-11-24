@@ -21,12 +21,14 @@ window.helpers = ->
   make_shape = (shape) ->
     document.createElementNS ns, shape
 
+  yy = (y) -> width - y
+  
   line = (p1, p2) ->
     elem = make_shape "line"
     elem.setAttribute "x1", p1[0]
-    elem.setAttribute "y1", p1[1]
+    elem.setAttribute "y1", yy p1[1]
     elem.setAttribute "x2", p2[0]
-    elem.setAttribute "y2", p2[1]
+    elem.setAttribute "y2", yy p2[1]
     $(elem).attr "style", "stroke:black"
     svg.appendChild elem
 
@@ -35,7 +37,7 @@ window.helpers = ->
     dot.setAttribute 'rx', rx
     dot.setAttribute 'ry', ry
     dot.setAttribute 'cx', cx
-    dot.setAttribute 'cy', cy
+    dot.setAttribute 'cy', yy cy
     dot.setAttribute "fill", fill
     svg.appendChild dot
     dx = 5
@@ -50,19 +52,17 @@ window.helpers = ->
       goto: (cx, cy) ->
         n = Math.floor cx / width
         self.attr "cx", cx
-        self.attr "cy", cy
+        self.attr "cy", yy cy
         ellipse(cx, cy, 1, 1, "red")
       turn: (angle) ->
         c = cosine(angle)
         s = sine(angle)
-        [dx, dy] = [dx * c + dy * s, dy * c - dx * s]
+        [dx, dy] = [dx * c - dy * s, dy * c + dx * s]
 
-  yy = (y) -> width - y
-  
   launch = (ball, angle) ->
     wall_offset = 315
     wall_height = 421
-    line [wall_offset, yy(0)], [wall_offset, yy(wall_height)] 
+    line [wall_offset, 0], [wall_offset, wall_height] 
     cx = 0
     cy = 0
     ball.goto(0, 0)
@@ -87,7 +87,7 @@ window.helpers = ->
       if flying
         cx += dx
         cy += dy
-        ball.goto(cx, width - cy)
+        ball.goto(cx, cy)
         dy -= 0.05
 
   after = (t, f) -> setTimeout f, t

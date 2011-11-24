@@ -23,13 +23,16 @@
     make_shape = function(shape) {
       return document.createElementNS(ns, shape);
     };
+    yy = function(y) {
+      return width - y;
+    };
     line = function(p1, p2) {
       var elem;
       elem = make_shape("line");
       elem.setAttribute("x1", p1[0]);
-      elem.setAttribute("y1", p1[1]);
+      elem.setAttribute("y1", yy(p1[1]));
       elem.setAttribute("x2", p2[0]);
-      elem.setAttribute("y2", p2[1]);
+      elem.setAttribute("y2", yy(p2[1]));
       $(elem).attr("style", "stroke:black");
       return svg.appendChild(elem);
     };
@@ -54,7 +57,7 @@
       dot.setAttribute('rx', rx);
       dot.setAttribute('ry', ry);
       dot.setAttribute('cx', cx);
-      dot.setAttribute('cy', cy);
+      dot.setAttribute('cy', yy(cy));
       dot.setAttribute("fill", fill);
       svg.appendChild(dot);
       dx = 5;
@@ -72,25 +75,22 @@
           var n;
           n = Math.floor(cx / width);
           self.attr("cx", cx);
-          self.attr("cy", cy);
+          self.attr("cy", yy(cy));
           return ellipse(cx, cy, 1, 1, "red");
         },
         turn: function(angle) {
           var c, s, _ref;
           c = cosine(angle);
           s = sine(angle);
-          return _ref = [dx * c + dy * s, dy * c - dx * s], dx = _ref[0], dy = _ref[1], _ref;
+          return _ref = [dx * c - dy * s, dy * c + dx * s], dx = _ref[0], dy = _ref[1], _ref;
         }
       };
-    };
-    yy = function(y) {
-      return width - y;
     };
     launch = function(ball, angle) {
       var ball_radius, cx, cy, dx, dy, flying, over_wall, v, wall_height, wall_offset;
       wall_offset = 315;
       wall_height = 421;
-      line([wall_offset, yy(0)], [wall_offset, yy(wall_height)]);
+      line([wall_offset, 0], [wall_offset, wall_height]);
       cx = 0;
       cy = 0;
       ball.goto(0, 0);
@@ -119,7 +119,7 @@
         if (flying) {
           cx += dx;
           cy += dy;
-          ball.goto(cx, width - cy);
+          ball.goto(cx, cy);
           return dy -= 0.05;
         }
       });
