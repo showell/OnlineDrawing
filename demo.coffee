@@ -43,8 +43,8 @@ run_code = (code) ->
     console.log "problem in JS"
     
 prelude = '''
-  width = 500
   environment = ->
+    width = 500
     ns = 'http://www.w3.org/2000/svg'
     canvas = ->
       svg = document.createElementNS ns, 'svg'
@@ -90,22 +90,26 @@ prelude = '''
           s = sine(angle)
           [dx, dy] = [dx * c + dy * s, dy * c - dx * s]
 
+    after = (t, f) -> setTimeout f, t
+
+    repeat = (f) ->
+      f()
+      after 100, -> repeat(f)
+
     svg: svg
     ellipse: ellipse
-    after: (t, f) -> setTimeout f, t
+    circle: ellipse
     width: width
+    repeat: repeat
     
   env = environment()
-  {svg, ellipse, after} = env
-  ball = ellipse()
-  repeat = (f) ->
-    f()
-    after 100, -> repeat(f)
+  {circle, repeat} = env
   ''' + '\n'
   
 code = '''
   # Challenge #1: Get the ball to turn a tighter circle.
   # Challenge #2: Get it to turn right.
+  ball = circle()
   repeat ->
     ball.move()
     ball.turn(3)
