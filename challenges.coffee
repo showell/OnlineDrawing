@@ -8,17 +8,21 @@ window.CHALLENGES = [
       ''' + '\n'
   
     code: '''
-      # Challenge: Make the cube bigger.
+      # Challenge: Make the cube bigger, but still fit in the drawing.
       shift = (point, dx, dy) ->
         [x, y] = point
         [x + dx, y + dy]
       
-      len = 160
+      # The cube has two rectangles:
+      # ABCD is the front face
+      # EFGH is the back face
+      
+      len = 60
       len2 = len * 0.9
       dx = len * 0.3
       dy = len * 0.6
       
-      A = [150, 150]
+      A = [50, 50]
       E = shift A, dx, dy # back corner
       
       B = shift A, len, 0
