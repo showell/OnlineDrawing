@@ -39,7 +39,7 @@
       $(elem).attr("style", "stroke:" + color);
       return svg.appendChild(elem);
     };
-    ellipse = function(cx, cy, rx, ry, fill) {
+    ellipse = function(cx, cy, rx, ry, fill, stroke) {
       var dot, dx, dy, self;
       if (cx == null) {
         cx = width / 2;
@@ -56,12 +56,19 @@
       if (fill == null) {
         fill = "blue";
       }
+      if (stroke == null) {
+        stroke = null;
+      }
+      if (!(stroke != null)) {
+        stroke = fill;
+      }
       dot = make_shape('ellipse');
       dot.setAttribute('rx', rx);
       dot.setAttribute('ry', ry);
       dot.setAttribute('cx', cx);
       dot.setAttribute('cy', yy(cy));
       dot.setAttribute("fill", fill);
+      dot.setAttribute("style", "stroke:" + stroke);
       svg.appendChild(dot);
       dx = 5;
       dy = 0;

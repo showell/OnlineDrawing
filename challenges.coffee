@@ -1,5 +1,26 @@
 window.CHALLENGES = [
   {
+    title: "Stick Man"
+    
+    prelude: '''
+      env = window.helpers()
+      {ellipse, line} = env
+      ''' + '\n'
+  
+    code: '''
+      head = ellipse(250, 400, 50, 60, "white", "black")
+      torso = line [250, 150], [250, 340]
+      right_elbow = [250-80, 300]
+      left_elbow = [250+80, 300]
+      line left_elbow, right_elbow
+      right_forearm = line right_elbow, [250-80-60, 330]
+      left_forearm = line left_elbow, [250+80+60, 330]
+      left_leg = line [250-80, 10], [250, 150]
+      right_leg = line [250+80, 10], [250, 150]
+      '''
+  },
+  
+  {
     title: "Draw the Cube"
     
     prelude: '''
@@ -48,7 +69,9 @@ window.CHALLENGES = [
       line C, G
       line D, H
       '''
-  },  {
+  },  
+  
+  {
     title: "Launch the Ball"
     
     prelude: '''
@@ -64,6 +87,7 @@ window.CHALLENGES = [
       launch ball, angle
       '''
   },
+  
   { 
     title: "Tighten the Circle"
     

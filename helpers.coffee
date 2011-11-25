@@ -32,13 +32,16 @@ window.helpers = ->
     $(elem).attr "style", "stroke:#{color}"
     svg.appendChild elem
 
-  ellipse = (cx=width/2, cy=width/2, rx=15, ry=15, fill="blue") ->
+  ellipse = (cx=width/2, cy=width/2, rx=15, ry=15, fill="blue", stroke=null) ->
+    if !stroke?
+      stroke = fill
     dot = make_shape 'ellipse'
     dot.setAttribute 'rx', rx
     dot.setAttribute 'ry', ry
     dot.setAttribute 'cx', cx
     dot.setAttribute 'cy', yy cy
     dot.setAttribute "fill", fill
+    dot.setAttribute "style", "stroke:#{stroke}"
     svg.appendChild dot
     dx = 5
     dy = 0
