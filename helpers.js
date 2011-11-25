@@ -27,20 +27,27 @@
     sine = function(angle) {
       return Math.sin(angle * Math.PI / 180);
     };
-    path = function(d) {
-      var cx, elem, xe, xm, xs, ye, ym, ys;
+    path = function(stroke, stroke_width, fill) {
+      var elem;
+      if (stroke == null) {
+        stroke = "black";
+      }
+      if (stroke_width == null) {
+        stroke_width = "1";
+      }
+      if (fill == null) {
+        fill = "none";
+      }
       elem = make_shape("path");
-      cx = 250;
-      xs = cx - 70;
-      xe = cx + 70;
-      xm = cx;
-      ys = ye = 230;
-      ym = ys + 70;
-      $(elem).attr("d", "M" + xs + ", " + ys + " Q" + xm + ", " + ym + "  " + xe + ", " + ye);
-      $(elem).attr("stroke", "red");
-      $(elem).attr("stroke-width", "4");
-      $(elem).attr("fill", "none");
-      return svg.appendChild(elem);
+      $(elem).attr("stroke", stroke);
+      $(elem).attr("stroke-width", stroke_width);
+      $(elem).attr("fill", fill);
+      svg.appendChild(elem);
+      return {
+        attr: function(f, v) {
+          return $(elem).attr(f, v);
+        }
+      };
     };
     line = function(p1, p2, color) {
       var elem;

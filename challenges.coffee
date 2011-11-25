@@ -11,13 +11,34 @@ window.CHALLENGES = [
     code: '''
       # Challenge: Change the frown to a smile.
       
+      # First we draw the head and eyes.
       cx = 250
       head = ellipse(cx, 300, 150, 150, "white", "black")
       draw_eye = (sign) ->
-        ellipse(cx + sign * 70, 340, 20, 20, "blue")
+        ellipse(cx + sign * 70, 340, 20, 20, "white", "black")
+        ellipse(cx + sign * 65, 330, 3, 3, "blue", "blue")
       draw_eye -1
       draw_eye 1
-      path()
+      
+      # Set up the points for the start, middle, and end
+      # of the smile. HINT: Change at least of these values.
+      cx = 250 # center 
+      smile_half_width = 70
+      curve_up = 50
+      smile_height = 230 # height for edges of smile
+      
+      xs = cx - smile_half_width
+      xe = cx + smile_half_width
+      xm = cx
+      ys = ye = smile_height
+      ym = ys + curve_up
+
+      # Once we have a path object, we can move to its start
+      # point (M), then draw a quadratic (Q) curve to the
+      # endpoint, using the midpoint to give it the right
+      # curvature.
+      p = path "red", 4
+      p.attr "d", "M#{xs}, #{ys} Q#{xm}, #{ym}  #{xe}, #{ye}"
       '''
   },
   

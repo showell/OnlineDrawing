@@ -27,20 +27,14 @@ window.helpers = ->
   sine = (angle) ->
     Math.sin (angle * Math.PI / 180)
     
-  path = (d) ->
+  path = (stroke="black", stroke_width="1", fill="none") ->
     elem = make_shape "path"
-    cx = 250
-    xs = cx - 70
-    xe = cx + 70
-    xm = cx
-    ys = ye = 230
-    ym = ys + 70
-    $(elem).attr "d", "M#{xs}, #{ys} Q#{xm}, #{ym}  #{xe}, #{ye}"
-    $(elem).attr "stroke", "red"
-    $(elem).attr "stroke-width", "4"
-    $(elem).attr "fill", "none"
+    $(elem).attr "stroke", stroke
+    $(elem).attr "stroke-width", stroke_width
+    $(elem).attr "fill", fill
     svg.appendChild elem
-  
+    attr: (f, v) -> $(elem).attr f, v
+
   line = (p1, p2, color="black") ->
     elem = make_shape "line"
     elem.setAttribute "x1", p1[0]

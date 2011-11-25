@@ -3,7 +3,7 @@
     {
       title: "Frownie Face",
       prelude: 'env = window.helpers()\n{ellipse, path} = env\nenv.slow()' + '\n',
-      code: '# Challenge: Change the frown to a smile.\n\ncx = 250\nhead = ellipse(cx, 300, 150, 150, "white", "black")\ndraw_eye = (sign) ->\n  ellipse(cx + sign * 70, 340, 20, 20, "blue")\ndraw_eye -1\ndraw_eye 1\npath()'
+      code: '# Challenge: Change the frown to a smile.\n\n# First we draw the head and eyes.\ncx = 250\nhead = ellipse(cx, 300, 150, 150, "white", "black")\ndraw_eye = (sign) ->\n  ellipse(cx + sign * 70, 340, 20, 20, "white", "black")\n  ellipse(cx + sign * 65, 330, 3, 3, "blue", "blue")\ndraw_eye -1\ndraw_eye 1\n\n# Set up the points for the start, middle, and end\n# of the smile. HINT: Change at least of these values.\ncx = 250 # center \nsmile_half_width = 70\ncurve_up = 50\nsmile_height = 230 # height for edges of smile\n\nxs = cx - smile_half_width\nxe = cx + smile_half_width\nxm = cx\nys = ye = smile_height\nym = ys + curve_up\n\n# Once we have a path object, we can move to its start\n# point (M), then draw a quadratic (Q) curve to the\n# endpoint, using the midpoint to give it the right\n# curvature.\np = path "red", 4\np.attr "d", "M#{xs}, #{ys} Q#{xm}, #{ym}  #{xe}, #{ye}"'
     }, {
       title: "Stick Man",
       prelude: 'env = window.helpers()\n{ellipse, line, repeat} = env\nenv.slow()' + '\n',
