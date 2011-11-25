@@ -1,6 +1,6 @@
 (function() {
   window.helpers = function() {
-    var after, canvas, cosine, ellipse, launch, line, make_shape, ns, repeat, sine, svg, width, yy;
+    var after, canvas, cosine, delay, ellipse, launch, line, make_shape, ns, repeat, sine, slow, svg, width, yy;
     width = 500;
     ns = 'http://www.w3.org/2000/svg';
     canvas = function() {
@@ -37,7 +37,13 @@
       elem.setAttribute("x2", p2[0]);
       elem.setAttribute("y2", yy(p2[1]));
       $(elem).attr("style", "stroke:" + color);
-      return svg.appendChild(elem);
+      svg.appendChild(elem);
+      return {
+        move_end: function(x2, y2) {
+          $(elem).attr("x2", x2);
+          return $(elem).attr("y2", yy(y2));
+        }
+      };
     };
     ellipse = function(cx, cy, rx, ry, fill, stroke) {
       var dot, dx, dy, self;
@@ -138,11 +144,15 @@
     after = function(t, f) {
       return setTimeout(f, t);
     };
+    delay = 30;
     repeat = function(f) {
       f();
-      return after(30, function() {
+      return after(delay, function() {
         return repeat(f);
       });
+    };
+    slow = function(f) {
+      return delay = 1000;
     };
     return {
       svg: svg,
@@ -151,7 +161,8 @@
       width: width,
       repeat: repeat,
       launch: launch,
-      line: line
+      line: line,
+      slow: slow
     };
   };
 }).call(this);

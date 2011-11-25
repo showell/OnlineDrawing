@@ -2,8 +2,8 @@
   window.CHALLENGES = [
     {
       title: "Stick Man",
-      prelude: 'env = window.helpers()\n{ellipse, line} = env' + '\n',
-      code: 'head = ellipse(250, 400, 50, 60, "white", "black")\ntorso = line [250, 150], [250, 340]\nright_elbow = [250-80, 300]\nleft_elbow = [250+80, 300]\nline left_elbow, right_elbow\nright_forearm = line right_elbow, [250-80-60, 330]\nleft_forearm = line left_elbow, [250+80+60, 330]\nleft_leg = line [250-80, 10], [250, 150]\nright_leg = line [250+80, 10], [250, 150]'
+      prelude: 'env = window.helpers()\n{ellipse, line, repeat} = env\nenv.slow()' + '\n',
+      code: '# Challenge: Get Stick Man to flex his left arm as\n# well as his right.\n\nhead = ellipse(250, 400, 50, 60, "white", "black")\ntorso = line [250, 170], [250, 340]\nleft_leg = line [250-80, 10], [250, 170]\nright_leg = line [250+80, 10], [250, 170]\n\nright_elbow = [250-90, 300]\nleft_elbow = [250+90, 300]\nline left_elbow, right_elbow\nright_forearm = line right_elbow, [250-90-90, 300]\nleft_forearm = line left_elbow, [250+90+90, 300]\n\ni = 0\nrepeat ->\n  i += 1\n  if i % 2 == 0\n    right_forearm.move_end 250-90, 390\n  else\n    right_forearm.move_end 250-90-90, 300'
     }, {
       title: "Draw the Cube",
       prelude: 'env = window.helpers()\n{line} = env' + '\n',

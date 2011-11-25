@@ -31,6 +31,9 @@ window.helpers = ->
     elem.setAttribute "y2", yy p2[1]
     $(elem).attr "style", "stroke:#{color}"
     svg.appendChild elem
+    move_end: (x2, y2) ->
+      $(elem).attr "x2", x2
+      $(elem).attr "y2", yy y2
 
   ellipse = (cx=width/2, cy=width/2, rx=15, ry=15, fill="blue", stroke=null) ->
     if !stroke?
@@ -97,9 +100,14 @@ window.helpers = ->
 
   after = (t, f) -> setTimeout f, t
 
+  delay = 30
+  
   repeat = (f) ->
     f()
-    after 30, -> repeat(f)
+    after delay, -> repeat(f)
+
+  slow = (f) ->
+    delay = 1000
 
   svg: svg
   ellipse: ellipse
@@ -108,6 +116,7 @@ window.helpers = ->
   repeat: repeat
   launch: launch
   line: line
+  slow: slow
   
   
   

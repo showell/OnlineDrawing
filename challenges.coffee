@@ -4,19 +4,32 @@ window.CHALLENGES = [
     
     prelude: '''
       env = window.helpers()
-      {ellipse, line} = env
+      {ellipse, line, repeat} = env
+      env.slow()
       ''' + '\n'
   
     code: '''
+      # Challenge: Get Stick Man to flex his left arm as
+      # well as his right.
+      
       head = ellipse(250, 400, 50, 60, "white", "black")
-      torso = line [250, 150], [250, 340]
-      right_elbow = [250-80, 300]
-      left_elbow = [250+80, 300]
+      torso = line [250, 170], [250, 340]
+      left_leg = line [250-80, 10], [250, 170]
+      right_leg = line [250+80, 10], [250, 170]
+
+      right_elbow = [250-90, 300]
+      left_elbow = [250+90, 300]
       line left_elbow, right_elbow
-      right_forearm = line right_elbow, [250-80-60, 330]
-      left_forearm = line left_elbow, [250+80+60, 330]
-      left_leg = line [250-80, 10], [250, 150]
-      right_leg = line [250+80, 10], [250, 150]
+      right_forearm = line right_elbow, [250-90-90, 300]
+      left_forearm = line left_elbow, [250+90+90, 300]
+      
+      i = 0
+      repeat ->
+        i += 1
+        if i % 2 == 0
+          right_forearm.move_end 250-90, 390
+        else
+          right_forearm.move_end 250-90-90, 300
       '''
   },
   
