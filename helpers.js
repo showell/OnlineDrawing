@@ -3,15 +3,22 @@
     var after, canvas, cosine, delay, ellipse, launch, line, make_shape, ns, path, repeat, sine, slow, svg, width, yy;
     width = 500;
     ns = 'http://www.w3.org/2000/svg';
+    make_shape = function(shape) {
+      return document.createElementNS(ns, shape);
+    };
     canvas = function() {
-      var elem, svg;
+      var elem, g, svg;
       svg = document.createElementNS(ns, "svg");
       svg.style.height = width + 'px';
       svg.style.width = width + 'px';
       svg.style.border = "1px black solid";
       elem = document.getElementById("main");
       $(elem).html(svg);
-      return svg;
+      svg;
+      g = make_shape("g");
+      $(g).attr("transform", "scale(1, -1) translate(0, " + (-1 * width) + ")");
+      svg.appendChild(g);
+      return g;
     };
     svg = canvas();
     cosine = function(angle) {
@@ -20,11 +27,8 @@
     sine = function(angle) {
       return Math.sin(angle * Math.PI / 180);
     };
-    make_shape = function(shape) {
-      return document.createElementNS(ns, shape);
-    };
     yy = function(y) {
-      return width - y;
+      return y;
     };
     path = function(d) {
       var cx, elem, xe, xm, xs, ye, ym, ys;

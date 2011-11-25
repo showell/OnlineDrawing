@@ -1,6 +1,10 @@
 window.helpers = ->
   width = 500
   ns = 'http://www.w3.org/2000/svg'
+
+  make_shape = (shape) ->
+    document.createElementNS ns, shape
+    
   canvas = ->
     svg = document.createElementNS ns, "svg"
     svg.style.height = width + 'px'
@@ -9,6 +13,11 @@ window.helpers = ->
     elem = document.getElementById("main")  
     $(elem).html svg
     svg
+    
+    g= make_shape "g"
+    $(g).attr "transform", "scale(1, -1) translate(0, #{-1 * width})"
+    svg.appendChild g
+    g
  
   svg = canvas()
   
@@ -18,10 +27,7 @@ window.helpers = ->
   sine = (angle) ->
     Math.sin (angle * Math.PI / 180)
     
-  make_shape = (shape) ->
-    document.createElementNS ns, shape
-
-  yy = (y) -> width - y
+  yy = (y) -> y
   
   path = (d) ->
     elem = make_shape "path"
