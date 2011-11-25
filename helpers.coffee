@@ -27,8 +27,6 @@ window.helpers = ->
   sine = (angle) ->
     Math.sin (angle * Math.PI / 180)
     
-  yy = (y) -> y
-  
   path = (d) ->
     elem = make_shape "path"
     cx = 250
@@ -37,7 +35,7 @@ window.helpers = ->
     xm = cx
     ys = ye = 230
     ym = ys + 70
-    $(elem).attr "d", "M#{xs}, #{yy ys} Q#{xm}, #{yy ym}  #{xe}, #{yy ye}"
+    $(elem).attr "d", "M#{xs}, #{ys} Q#{xm}, #{ym}  #{xe}, #{ye}"
     $(elem).attr "stroke", "red"
     $(elem).attr "stroke-width", "4"
     $(elem).attr "fill", "none"
@@ -46,14 +44,14 @@ window.helpers = ->
   line = (p1, p2, color="black") ->
     elem = make_shape "line"
     elem.setAttribute "x1", p1[0]
-    elem.setAttribute "y1", yy p1[1]
+    elem.setAttribute "y1", p1[1]
     elem.setAttribute "x2", p2[0]
-    elem.setAttribute "y2", yy p2[1]
+    elem.setAttribute "y2", p2[1]
     $(elem).attr "style", "stroke:#{color}"
     svg.appendChild elem
     move_end: (x2, y2) ->
       $(elem).attr "x2", x2
-      $(elem).attr "y2", yy y2
+      $(elem).attr "y2", y2
 
   ellipse = (cx=width/2, cy=width/2, rx=15, ry=15, fill="blue", stroke=null) ->
     if !stroke?
@@ -62,7 +60,7 @@ window.helpers = ->
     dot.setAttribute 'rx', rx
     dot.setAttribute 'ry', ry
     dot.setAttribute 'cx', cx
-    dot.setAttribute 'cy', yy cy
+    dot.setAttribute 'cy', cy
     dot.setAttribute "fill", fill
     dot.setAttribute "style", "stroke:#{stroke}"
     svg.appendChild dot
@@ -78,7 +76,7 @@ window.helpers = ->
       goto: (cx, cy) ->
         n = Math.floor cx / width
         self.attr "cx", cx
-        self.attr "cy", yy cy
+        self.attr "cy", cy
         ellipse(cx, cy, 1, 1, "red")
       turn: (angle) ->
         c = cosine(angle)

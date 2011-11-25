@@ -1,6 +1,6 @@
 (function() {
   window.helpers = function() {
-    var after, canvas, cosine, delay, ellipse, launch, line, make_shape, ns, path, repeat, sine, slow, svg, width, yy;
+    var after, canvas, cosine, delay, ellipse, launch, line, make_shape, ns, path, repeat, sine, slow, svg, width;
     width = 500;
     ns = 'http://www.w3.org/2000/svg';
     make_shape = function(shape) {
@@ -27,9 +27,6 @@
     sine = function(angle) {
       return Math.sin(angle * Math.PI / 180);
     };
-    yy = function(y) {
-      return y;
-    };
     path = function(d) {
       var cx, elem, xe, xm, xs, ye, ym, ys;
       elem = make_shape("path");
@@ -39,7 +36,7 @@
       xm = cx;
       ys = ye = 230;
       ym = ys + 70;
-      $(elem).attr("d", "M" + xs + ", " + (yy(ys)) + " Q" + xm + ", " + (yy(ym)) + "  " + xe + ", " + (yy(ye)));
+      $(elem).attr("d", "M" + xs + ", " + ys + " Q" + xm + ", " + ym + "  " + xe + ", " + ye);
       $(elem).attr("stroke", "red");
       $(elem).attr("stroke-width", "4");
       $(elem).attr("fill", "none");
@@ -52,15 +49,15 @@
       }
       elem = make_shape("line");
       elem.setAttribute("x1", p1[0]);
-      elem.setAttribute("y1", yy(p1[1]));
+      elem.setAttribute("y1", p1[1]);
       elem.setAttribute("x2", p2[0]);
-      elem.setAttribute("y2", yy(p2[1]));
+      elem.setAttribute("y2", p2[1]);
       $(elem).attr("style", "stroke:" + color);
       svg.appendChild(elem);
       return {
         move_end: function(x2, y2) {
           $(elem).attr("x2", x2);
-          return $(elem).attr("y2", yy(y2));
+          return $(elem).attr("y2", y2);
         }
       };
     };
@@ -91,7 +88,7 @@
       dot.setAttribute('rx', rx);
       dot.setAttribute('ry', ry);
       dot.setAttribute('cx', cx);
-      dot.setAttribute('cy', yy(cy));
+      dot.setAttribute('cy', cy);
       dot.setAttribute("fill", fill);
       dot.setAttribute("style", "stroke:" + stroke);
       svg.appendChild(dot);
@@ -110,7 +107,7 @@
           var n;
           n = Math.floor(cx / width);
           self.attr("cx", cx);
-          self.attr("cy", yy(cy));
+          self.attr("cy", cy);
           return ellipse(cx, cy, 1, 1, "red");
         },
         turn: function(angle) {
