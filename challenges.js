@@ -1,6 +1,10 @@
 (function() {
   window.CHALLENGES = [
     {
+      title: "Frownie Face",
+      prelude: 'env = window.helpers()\n{ellipse, path} = env\nenv.slow()' + '\n',
+      code: '# Challenge: Change the frown to a smile.\n\ncx = 250\nhead = ellipse(cx, 300, 150, 150, "white", "black")\ndraw_eye = (sign) ->\n  ellipse(cx + sign * 70, 340, 20, 20, "blue")\ndraw_eye -1\ndraw_eye 1\npath()'
+    }, {
       title: "Stick Man",
       prelude: 'env = window.helpers()\n{ellipse, line, repeat} = env\nenv.slow()' + '\n',
       code: '# Challenge: Get Stick Man to flex his left arm as\n# well as his right.\n\nhead = ellipse(250, 400, 50, 60, "white", "black")\ntorso = line [250, 170], [250, 340]\nleft_leg = line [250-80, 10], [250, 170]\nright_leg = line [250+80, 10], [250, 170]\n\nright_elbow = [250-90, 300]\nleft_elbow = [250+90, 300]\nline left_elbow, right_elbow\nright_forearm = line right_elbow, [250-90-90, 300]\nleft_forearm = line left_elbow, [250+90+90, 300]\n\ni = 0\nrepeat ->\n  i += 1\n  if i % 2 == 0\n    right_forearm.move_end 250-90, 390\n  else\n    right_forearm.move_end 250-90-90, 300'

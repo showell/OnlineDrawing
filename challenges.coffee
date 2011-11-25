@@ -1,5 +1,27 @@
 window.CHALLENGES = [
   {
+    title: "Frownie Face"
+    
+    prelude: '''
+      env = window.helpers()
+      {ellipse, path} = env
+      env.slow()
+      ''' + '\n'
+  
+    code: '''
+      # Challenge: Change the frown to a smile.
+      
+      cx = 250
+      head = ellipse(cx, 300, 150, 150, "white", "black")
+      draw_eye = (sign) ->
+        ellipse(cx + sign * 70, 340, 20, 20, "blue")
+      draw_eye -1
+      draw_eye 1
+      path()
+      '''
+  },
+  
+  {
     title: "Stick Man"
     
     prelude: '''

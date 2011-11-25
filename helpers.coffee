@@ -2,14 +2,14 @@ window.helpers = ->
   width = 500
   ns = 'http://www.w3.org/2000/svg'
   canvas = ->
-    svg = document.createElementNS ns, 'svg'
+    svg = document.createElementNS ns, "svg"
     svg.style.height = width + 'px'
     svg.style.width = width + 'px'
     svg.style.border = "1px black solid"
     elem = document.getElementById("main")  
     $(elem).html svg
     svg
-  
+ 
   svg = canvas()
   
   cosine = (angle) ->
@@ -22,6 +22,20 @@ window.helpers = ->
     document.createElementNS ns, shape
 
   yy = (y) -> width - y
+  
+  path = (d) ->
+    elem = make_shape "path"
+    cx = 250
+    xs = cx - 70
+    xe = cx + 70
+    xm = cx
+    ys = ye = 230
+    ym = ys + 70
+    $(elem).attr "d", "M#{xs}, #{yy ys} Q#{xm}, #{yy ym}  #{xe}, #{yy ye}"
+    $(elem).attr "stroke", "red"
+    $(elem).attr "stroke-width", "4"
+    $(elem).attr "fill", "none"
+    svg.appendChild elem
   
   line = (p1, p2, color="black") ->
     elem = make_shape "line"
@@ -117,6 +131,7 @@ window.helpers = ->
   launch: launch
   line: line
   slow: slow
+  path: path
   
   
   

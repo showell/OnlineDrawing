@@ -1,11 +1,11 @@
 (function() {
   window.helpers = function() {
-    var after, canvas, cosine, delay, ellipse, launch, line, make_shape, ns, repeat, sine, slow, svg, width, yy;
+    var after, canvas, cosine, delay, ellipse, launch, line, make_shape, ns, path, repeat, sine, slow, svg, width, yy;
     width = 500;
     ns = 'http://www.w3.org/2000/svg';
     canvas = function() {
       var elem, svg;
-      svg = document.createElementNS(ns, 'svg');
+      svg = document.createElementNS(ns, "svg");
       svg.style.height = width + 'px';
       svg.style.width = width + 'px';
       svg.style.border = "1px black solid";
@@ -25,6 +25,21 @@
     };
     yy = function(y) {
       return width - y;
+    };
+    path = function(d) {
+      var cx, elem, xe, xm, xs, ye, ym, ys;
+      elem = make_shape("path");
+      cx = 250;
+      xs = cx - 70;
+      xe = cx + 70;
+      xm = cx;
+      ys = ye = 230;
+      ym = ys + 70;
+      $(elem).attr("d", "M" + xs + ", " + (yy(ys)) + " Q" + xm + ", " + (yy(ym)) + "  " + xe + ", " + (yy(ye)));
+      $(elem).attr("stroke", "red");
+      $(elem).attr("stroke-width", "4");
+      $(elem).attr("fill", "none");
+      return svg.appendChild(elem);
     };
     line = function(p1, p2, color) {
       var elem;
@@ -162,7 +177,8 @@
       repeat: repeat,
       launch: launch,
       line: line,
-      slow: slow
+      slow: slow,
+      path: path
     };
   };
 }).call(this);
